@@ -1,23 +1,14 @@
 
  ## Steps ##
 
-# [TODO] - Import the video to the program (webcam or recording).
-# [TODO] - Threshold the frames to isolate the object.
-# [TODO] - Find its centroid and respective (x,y) values -> this will be our measurements. 
-# [TODO] - Reproduce the video with an draw circle in this centroid position.
-# [TODO] - Apply the Kalman filter to this video to detect the future movement of the object.
-# [TODO] - Show tree or four prediction for the object on the video.
+# [OK] - Import the video to the program (webcam or recording).
+# [OK] - Threshold the frames to isolate the object.
+# [OK] - Find its centroid and respective (x,y) values -> this will be our measurements. 
+# [OK] - Reproduce the video with an draw circle in this centroid position.
+# [OK] - Apply the Kalman filter to this video to detect the future movement of the object.
+# [OPTIONAL] - Show tree or four prediction for the object on the video.
 
  # ####### #
-
- ## COMMENTS ##
-
- # --> System is slow (using old observed values) not accompanying the object and predicting its future values 
- # --> Not too precise (slightly above real value) (Wrong kalman gain?)
-
- # --> iam two frames behind, need to be in maximum one frame 
-
- #####
 
 
 import cv2 as cv
@@ -123,10 +114,6 @@ if __name__ == "__main__":
         
         # Closes all the frames
         cv.destroyAllWindows()
-
-# [TODO] - Reproduce the video with an draw circle in this centroid position.
-# [TODO] - Apply the Kalman filter to this video to detect the future movement of the object.
-# [TODO] - Show tree or four prediction for the object on the video.
 
 
 

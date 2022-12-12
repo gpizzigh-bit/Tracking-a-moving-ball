@@ -26,7 +26,7 @@ def kalman_filter(cX:int, cY:int, dt: float, index: int, observation_px: list, o
     kalman_filt.statePost = np.array(init_state, np.float32)
     kalman_filt.statePre  = np.array(init_state, np.float32)
 
-    # Matrix creation 
+    #Matrix creation 
     kalman_filt.transitionMatrix = np.array([[1, 0, dt+gravity_factor, 0],
                                              [0, 1, 0, dt+gravity_factor],
                                              [0, 0, 1, 0],
