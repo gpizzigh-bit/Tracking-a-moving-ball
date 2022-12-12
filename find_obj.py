@@ -160,3 +160,4 @@ def get_fps(video_name: str) -> float:
     else :
         fps = video.get(cv.CAP_PROP_FPS)
         return fps
+

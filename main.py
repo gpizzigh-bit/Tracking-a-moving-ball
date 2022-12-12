@@ -46,6 +46,7 @@ if __name__ == "__main__":
     # mask,_ = find_object_ferneback(filename_video) # this too is slow....
     mask,_ = find_object_inrange(filename_video,scale)
 
+
     # Check if camera opened successfully
     if cap.isOpened() == True: 
         # Read until video is completed
@@ -59,7 +60,10 @@ if __name__ == "__main__":
                 # [OK] - Threshold the frames to isolate the object.
                 mask_rgb = cv.cvtColor(mask[index], cv.COLOR_GRAY2BGR)
                 masked_frame = frame & mask_rgb
-
+                
+                if index == 31:
+                    cv.imwrite("images/mask_rgb_31.jpg",masked_frame)
+                
                 # [OK] - Find its centroid and respective (x,y) values -> this will be our measurements.
                 cX, cY, observation_px, observation_py = get_centroid_values(mask[index],observation_px,observation_py)
                 
@@ -77,7 +81,7 @@ if __name__ == "__main__":
                 frame = show_obs_trajectory(frame,scale,cX, cY,index, observation_px, observation_py)
                 cv.putText(frame, f"{index}", (900,30), cv.FONT_HERSHEY_SIMPLEX, 0.5, (255,255,100), 1)
 
-                cv.imshow('Video',frame)
+                cv.imshow('Kalman',frame)
                 index += 1 # update index
 
                 cv.waitKey(aux)
