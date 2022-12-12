@@ -28,8 +28,8 @@ from kf import *
 
 
 # [OK] - Import the video to the program (webcam or recording).
-filename_video = "sample1.mp4"
-file_path_output = "sample_1_out.mp4"
+filename_video = "videos/sample1.mp4"
+file_path_output = "videos/sample_1_out.mp4"
 fps = get_fps(filename_video)
 dt = 1/fps
 scale = 2
@@ -41,6 +41,13 @@ fitted_y_list = []
 if __name__ == "__main__":
 
     cap = cv.VideoCapture(filename_video)
+    #print((int(cap.get(3)),int(cap.get(4))))
+    size = (int(cap.get(3)/scale), int(cap.get(4)/scale))
+    print(size)
+    res = cv.VideoWriter(file_path_output,
+                         cv.VideoWriter_fourcc(*'mp4v'),
+                         30,
+                         size)
 
     # get mask
     # mask,_ = find_object_ferneback(filename_video) # this too is slow....
@@ -79,7 +86,7 @@ if __name__ == "__main__":
                         cv.imwrite("images/frame_obs_31.jpg",frame[200:300, 300:400])
                     frame = show_pred_trajectory(frame,scale, index, predicted_px, predicted_py)
                     frame = show_measured_trajectory(frame,scale,index, measured_px, measured_py)
-                    print(f"::MAIN:: - [{index}](x,y) | obs : {(observation_px[-1],observation_py[-1])} | pred: {(predicted_px[-1],predicted_py[-1])} | meas : {(measured_px[-1],measured_py[-1])} ")
+                    print(f"::MAIN:: - Frame[{index}] | (x,y) > obs : {(observation_px[-1],observation_py[-1])} | pred: {(predicted_px[-1],predicted_py[-1])} | meas : {(measured_px[-1],measured_py[-1])} ")
                     print(f"--------------------------------------------------------------------------------------------------------")
                 
                 # [OK] - Reproduce the video with an draw circle in this centroid position.
@@ -87,6 +94,7 @@ if __name__ == "__main__":
                 cv.putText(frame, f"{index}", (900,30), cv.FONT_HERSHEY_SIMPLEX, 0.5, (255,255,100), 1)
 
                 cv.imshow('Kalman',frame)
+                res.write(frame)
                 index += 1 # update index
 
                 cv.waitKey(aux)
@@ -103,20 +111,15 @@ if __name__ == "__main__":
                 position_line = plt.plot(observation_px, observation_py, linestyle='', marker='o', color='g', label='observation')
                 predicted_line = plt.plot(predicted_px, predicted_py, linestyle='', marker='o', color='b', label='prediction')
                 measured_line = plt.plot(measured_px, measured_py, linestyle='', marker='x', color='y', label='measured')
-                """ polifit_curve_eq = np.polynomial.polynomial.polyfit(observation_px, observation_py,2)
-                poly = np.poly1d(polifit_curve_eq)
-                for x in observation_px:
-                    fitted_y = poly(x)
-                    fitted_y_list.append(fitted_y)
-                print(fitted_y_list)
-                #position_line = plt.plot(observation_px,fitted_y_list, color='r', label='observation') """
                 plt.legend(loc='lower right')
+                plt.title("Kalman filter 2D")
                 plt.xlabel('x pixel')
                 plt.ylabel('y pixel')
                 plt.show()
                 break
         # When everything done, release the video capture object
         cap.release()
+        res.release()
         
         # Closes all the frames
         cv.destroyAllWindows()

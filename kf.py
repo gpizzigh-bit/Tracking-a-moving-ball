@@ -64,8 +64,6 @@ def kalman_filter(cX:int, cY:int, dt: float, index: int, observation_px: list, o
 
         tp = kalman_filt.predict()
 
-        print(f"::KF:: [{index}] - x:{int(tp[0])} y: {int(tp[1])}")
-
         if (int(tp[0])) >= 0 and (int(tp[1])) >= 0:
             predicted_px.append((int(tp[0])))
             predicted_py.append((int(tp[1])))

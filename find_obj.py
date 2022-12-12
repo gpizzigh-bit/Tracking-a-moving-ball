@@ -136,7 +136,6 @@ def show_pred_trajectory(frame,scale: int, mask_index: int,predicted_px: list,pr
     # draw past points
     for i in range(0,mask_index-1):
         cv.circle(frame, (predicted_px[i],predicted_py[i]),scale*2,(150, 0, 0),-1)
-    print(f"::FIND_OBJ:: [{mask_index}] - y: {predicted_py[i]}")
     
     return frame
 
