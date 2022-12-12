@@ -74,6 +74,9 @@ if __name__ == "__main__":
                 # Wait for a minimum of 2 values
                 if index >= 2:   
                     _,measured_px,measured_py,predicted_px,predicted_py = kalman_filter(cX,cY,dt,index,observation_px,observation_py)
+                    if index == 31:
+                        frame = show_obs_trajectory(frame,scale,cX, cY,index, observation_px, observation_py)
+                        cv.imwrite("images/frame_obs_31.jpg",frame[200:300, 300:400])
                     frame = show_pred_trajectory(frame,scale, index, predicted_px, predicted_py)
                     frame = show_measured_trajectory(frame,scale,index, measured_px, measured_py)
                     print(f"::MAIN:: - [{index}](x,y) | obs : {(observation_px[-1],observation_py[-1])} | pred: {(predicted_px[-1],predicted_py[-1])} | meas : {(measured_px[-1],measured_py[-1])} ")
