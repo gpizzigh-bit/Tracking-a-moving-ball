@@ -61,12 +61,14 @@ if __name__ == "__main__":
                 mask_rgb = cv.cvtColor(mask[index], cv.COLOR_GRAY2BGR)
                 masked_frame = frame & mask_rgb
                 
-                if index == 31:
-                    cv.imwrite("images/mask_rgb_31.jpg",masked_frame)
                 
                 # [OK] - Find its centroid and respective (x,y) values -> this will be our measurements.
                 cX, cY, observation_px, observation_py = get_centroid_values(mask[index],observation_px,observation_py)
                 
+                if index == 31:
+                    cv.imwrite("images/mask_31.jpg",mask[index][200:300, 300:400])
+                    cv.imwrite("images/mask_rgb_31.jpg",masked_frame[200:300, 300:400])
+
                 # [TODO] - Apply the Kalman filter to this video to detect the future movement of the object.
 
                 # Wait for a minimum of 2 values
